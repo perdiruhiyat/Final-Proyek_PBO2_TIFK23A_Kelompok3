@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard Admin</title>
+</head>
+<body>
+    <h1>Selamat Datang, Admin!</h1>
+    <ul>
+        <li><a th:href="@{/admin/users}">Manajemen User</a></li>
+        <li><a th:href="@{/admin/hardware}">Data Hardware</a></li>
+        <li><a th:href="@{/admin/standar-waktu}">Standar Waktu</a></li>
+        <li><a th:href="@{/admin/rekap}">Rekap Perawatan</a></li>
+    </ul>
+    <a th:href="@{/logout}">Logout</a>
+</body>
+</html>

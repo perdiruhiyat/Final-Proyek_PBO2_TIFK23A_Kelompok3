@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard Teknisi</title>
+</head>
+<body>
+    <h1>Selamat Datang, Teknisi!</h1>
+    <ul>
+        <li><a th:href="@{/teknisi/rekap}">Input Rekap Perawatan</a></li>
+        <li><a th:href="@{/teknisi/history}">Riwayat Perawatan</a></li>
+    </ul>
+    <a th:href="@{/logout}">Logout</a>
+</body>
+</html>
