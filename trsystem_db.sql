@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 20, 2025 at 02:29 PM
+-- Generation Time: Jul 22, 2025 at 03:55 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -29,11 +29,18 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `hardware` (
   `id` bigint NOT NULL,
-  `hardware_id` varchar(100) NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `tipe` varchar(100) NOT NULL,
-  `kategori` varchar(50) NOT NULL
+  `hardware_id` varchar(255) DEFAULT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `tipe` varchar(255) DEFAULT NULL,
+  `kategori` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `hardware`
+--
+
+INSERT INTO `hardware` (`id`, `hardware_id`, `nama`, `tipe`, `kategori`) VALUES
+(1, 'PC-001', 'Marketing 1', 'Intel Core i3-1240u 8GB', 'Komputer');
 
 -- --------------------------------------------------------
 
@@ -69,8 +76,37 @@ CREATE TABLE `rekap_perawatan` (
 CREATE TABLE `standar_waktu` (
   `id` bigint NOT NULL,
   `deskripsi` varchar(255) NOT NULL,
-  `waktu_menit` int NOT NULL
+  `waktu_menit` int NOT NULL,
+  `waktu` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `standar_waktu`
+--
+
+INSERT INTO `standar_waktu` (`id`, `deskripsi`, `waktu_menit`, `waktu`) VALUES
+(1, 'Check & Repair HDD 250GB', 50, NULL),
+(2, 'Check & Repair HDD 500GB', 100, NULL),
+(3, 'Check & Repair HDD 1TB', 200, NULL),
+(4, 'Check & Repair HDD 2TB', 400, NULL),
+(5, 'Ganti Komponen Hardware (Plug & Play)', 20, NULL),
+(6, 'Install OS Standard ADM', 120, NULL),
+(7, 'Install OS Standard Non ADM', 240, NULL),
+(8, 'Isi Ulang Tinta', 15, NULL),
+(9, 'Isi Ulang Toner', 15, NULL),
+(10, 'Isi Ulang/Ganti Pita', 20, NULL),
+(11, 'Lain-lain', 120, NULL),
+(12, 'Isi Ulang Tinta + Tindakan', 30, NULL),
+(13, 'Isi Ulang Toner + Tindakan', 35, NULL),
+(14, 'Ganti Komponen Hardware (Solder)', 45, NULL),
+(15, 'Instalasi Jaringan/CCTV 60 Meter', 110, NULL),
+(16, 'Instalasi Jaringan/CCTV 80 Meter', 180, NULL),
+(17, 'Instalasi Jaringan/CCTV 100 Meter', 210, NULL),
+(18, 'Troubleshoot + Pengujian', 300, NULL),
+(19, 'Ganti Komponen Hardware (Plug & Play + Bongkar total)', 60, NULL),
+(20, 'Ganti Komponen Hardware (Solder + Bongkar Total)', 80, NULL),
+(21, 'Instalasi Acces Door', 180, NULL),
+(22, 'Instalasi Acces Door + Bobok', 360, NULL);
 
 -- --------------------------------------------------------
 
@@ -81,7 +117,7 @@ CREATE TABLE `standar_waktu` (
 CREATE TABLE `users` (
   `id` bigint NOT NULL,
   `username` varchar(255) DEFAULT NULL,
-  `nama` varchar(100) NOT NULL,
+  `nama` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `role` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -92,7 +128,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `nama`, `password`, `role`) VALUES
 (1, 'admin', 'Administrator', '$2a$12$SoTonQALCkGGAoeLSTh1WekVMfzCQtw8okG953Dq1sV5M3yaaWS8S', 'ADMIN'),
-(2, 'perdi', 'Perdi Ruhiyat', '$2a$12$mdjE2EgnBfUgKPAuUnibpOrUt4CMYqsnEn.VAA/atHyXGxygC8maK', 'TEKNISI');
+(2, 'perdi', 'Perdi Ruhiyat', '$2a$12$mdjE2EgnBfUgKPAuUnibpOrUt4CMYqsnEn.VAA/atHyXGxygC8maK', 'TEKNISI'),
+(5, 'wendi', 'Wendi Rahmawan', '$2a$10$ZRCz42VRFIYI5DFapskmjedzob7P1mNMr2QpHlNO9XNS31fV3THHO', 'TEKNISI');
 
 --
 -- Indexes for dumped tables
@@ -135,7 +172,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `hardware`
 --
 ALTER TABLE `hardware`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `rekap_perawatan`
@@ -147,13 +184,13 @@ ALTER TABLE `rekap_perawatan`
 -- AUTO_INCREMENT for table `standar_waktu`
 --
 ALTER TABLE `standar_waktu`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
