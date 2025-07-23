@@ -12,38 +12,38 @@ import com.example.trsystem.repository.StandarWaktuRepository;
 @Service
 public class StandarWaktuService {
     @Autowired
-    private StandarWaktuRepository repo;
+    private StandarWaktuRepository swRepo;
 
-    public StandarWaktuService(StandarWaktuRepository repo) {
-        this.repo = repo;
+    public StandarWaktuService(StandarWaktuRepository swRepo) {
+        this.swRepo = swRepo;
     }
 
-    public List<StandarWaktu> findAll() {
-        return repo.findAll();
+    public List<StandarWaktu> getAllSw() {
+        return swRepo.findAll();
     }
 
     public Optional<StandarWaktu> findById(Long id) {
-        return repo.findById(id);
+        return swRepo.findById(id);
     }
 
     public void createStandarWaktu(String deskripsi, Integer waktu) {
         StandarWaktu sw = new StandarWaktu();
         sw.setDeskripsi(deskripsi);
         sw.setWaktu(waktu);
-        repo.save(sw);
+        swRepo.save(sw);
     }
 
     public void updateStandarWaktu(Long id, String deskripsi, Integer waktu){
-        Optional<StandarWaktu> optionalSw = repo.findById(id);
+        Optional<StandarWaktu> optionalSw = swRepo.findById(id);
         if (optionalSw.isPresent()) {
             StandarWaktu sw = optionalSw.get();
             sw.setDeskripsi(deskripsi);
             sw.setWaktu(waktu);
-            repo.save(sw);;
+            swRepo.save(sw);;
         }
     }
 
     public void deleteStandarWaktu(Long id) {
-        repo.deleteById(id);
+        swRepo.deleteById(id);
     }
 }

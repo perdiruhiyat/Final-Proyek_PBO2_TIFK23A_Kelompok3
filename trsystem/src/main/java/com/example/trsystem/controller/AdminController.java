@@ -4,6 +4,7 @@ import com.example.trsystem.model.Hardware;
 import com.example.trsystem.model.StandarWaktu;
 import com.example.trsystem.model.User;
 import com.example.trsystem.service.HardwareService;
+import com.example.trsystem.service.RekapPerawatanService;
 import com.example.trsystem.service.StandarWaktuService;
 import com.example.trsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,12 @@ public class AdminController {
     @Autowired
     private StandarWaktuService swService;
 
+    @Autowired
+    private RekapPerawatanService rekapService;
+
     @GetMapping("/admin/admin_dashboard")
     public String adminDashboard() {
         return "admin/admin_dashboard";
-    }
-
-    @GetMapping("/admin/admin_rekap")
-    public String adminRekap() {
-        return "admin/admin_rekap";
     }
 
     @GetMapping("/admin/admin_user")
@@ -102,7 +101,7 @@ public class AdminController {
     @GetMapping("/admin/admin_standarwaktu")
     public String adminStandarWaktu(Model model) {
         model.addAttribute("standarwaktu", new StandarWaktu());
-        model.addAttribute("listSw", swService.findAll());
+        model.addAttribute("listSw", swService.getAllSw());
         return "admin/admin_standarwaktu";
     }
 
@@ -125,5 +124,11 @@ public class AdminController {
     public String hapusStandarWaktu(@PathVariable Long id) {
         swService.deleteStandarWaktu(id);
         return "redirect:/admin/admin_standarwaktu";
+    }
+
+    @GetMapping("/admin/admin_rekap")
+    public String adminRekap(Model model) {
+        model.addAttribute("rekapList", rekapService.getAllRekap());
+        return "admin/admin_rekap";
     }
 }

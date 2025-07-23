@@ -68,6 +68,11 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException("User tidak ditemukan"));
+    }
+
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

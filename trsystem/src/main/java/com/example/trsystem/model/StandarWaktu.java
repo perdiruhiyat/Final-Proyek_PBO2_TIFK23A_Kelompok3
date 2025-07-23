@@ -11,10 +11,10 @@ public class StandarWaktu {
 
     private String deskripsi;
     
-    @Column(name = "waktu_menit")
     private Integer waktu;
 
     public Long getId() { return id; }
+    public void setId(Long id){this.id = id;}
 
     public String getDeskripsi() { return deskripsi; }
 

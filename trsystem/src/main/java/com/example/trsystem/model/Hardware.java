@@ -3,7 +3,7 @@ package com.example.trsystem.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "hardware") // Anda mungkin perlu menyesuaikan nama tabel ini
+@Table(name = "hardware")
 public class Hardware {
 
     @Id
