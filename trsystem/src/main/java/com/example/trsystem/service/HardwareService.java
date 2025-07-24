@@ -5,7 +5,9 @@ import com.example.trsystem.repository.HardwareRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -85,5 +87,34 @@ public class HardwareService {
      */
     public Optional<Hardware> findByHardwareId(String hardwareId) {
         return hardwareRepository.findByHardwareId(hardwareId);
+    }
+
+    public String generateHardwareId(String kategori) {
+    String prefix = switch (kategori.toLowerCase()) {
+        case "komputer", "laptop" -> "PC";
+        case "printer" -> "PR";
+        case "cctv" -> "CAM";
+        case "switch" -> "SW";
+        case "switch poe" -> "SWP";
+        case "access point" -> "AP";
+        case "mesin absen" -> "MA";
+        default -> "HW";
+    };
+
+    long count = hardwareRepository.countByKategori(kategori);
+        return String.format("%s-%03d", prefix, count + 1);
+    }
+
+    public Map<String, Long> getKategoriChart() {
+        Map<String, Long> data = new LinkedHashMap<>();
+
+        List<String> kategoriList = List.of("Komputer", "Laptop", "Printer", "Access Point", "Mesin Absen", "Switch", "Switch PoE", "CAM");
+
+        for (String kategori : kategoriList) {
+            long jumlah = hardwareRepository.countByKategori(kategori);
+            data.put(kategori, jumlah);
+        }
+
+        return data;
     }
 }

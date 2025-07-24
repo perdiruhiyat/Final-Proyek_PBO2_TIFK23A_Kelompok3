@@ -11,6 +11,7 @@ import com.example.trsystem.service.StandarWaktuService;
 import com.example.trsystem.service.UserService;
 
 import java.security.Principal;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AdminController {
@@ -51,6 +53,12 @@ public class AdminController {
         model.addAttribute("totalRekap", totalRekap);
         model.addAttribute("totalHardware", totalHardware);
         model.addAttribute("nama", user.getNama());
+
+        Map<String, Long> rekapPerBulan = rekapService.getRekapPerMonth();
+        model.addAttribute("rekapPerBulan", rekapPerBulan);
+
+        Map<String, Long> kategoriHardware = hardwareService.getKategoriChart();
+        model.addAttribute("kategoriChart", kategoriHardware);
         return "admin/admin_dashboard";
     }
 
@@ -96,6 +104,11 @@ public class AdminController {
         model.addAttribute("hardwareBaru", new Hardware());
         model.addAttribute("hardwareList", hardwareService.getAllHardware());
         return "admin/admin_hardware";
+    }
+
+    @GetMapping("/admin/admin_hardware/generate-id")
+    public @ResponseBody String generateHardwareId(@RequestParam String kategori) {
+        return hardwareService.generateHardwareId(kategori);
     }
 
     @PostMapping("/admin/admin_hardware/tambah")

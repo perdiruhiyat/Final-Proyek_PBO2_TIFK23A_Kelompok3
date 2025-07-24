@@ -17,185 +17,217 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg bg-white fixed-top border-bottom shadow-sm px-3">
-    <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="/admin/admin_dashboard">TRSystem</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<div class="wrapper d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg bg-white fixed-top border-bottom shadow-sm px-3">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="/admin/admin_dashboard">TRSystem</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
-            <!-- Menu utama -->
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="/admin/admin_dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/admin/admin_user"><i class="bi bi-people"></i> User</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/admin_hardware"><i class="bi bi-cpu"></i> Hardware</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/admin_standarwaktu"><i class="bi bi-clock-history"></i> Standar Waktu</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/admin_rekap"><i class="bi bi-journal-text"></i> Rekap</a></li>
-            </ul>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/admin/admin_dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/admin/admin_user"><i class="bi bi-people"></i> User</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/admin_hardware"><i class="bi bi-cpu"></i> Hardware</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/admin_standarwaktu"><i class="bi bi-clock-history"></i> Standar Waktu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/admin_rekap"><i class="bi bi-journal-text"></i> Rekap</a></li>
+                </ul>
 
-            <!-- User login -->
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        <i class="bi bi-person-circle me-1"></i>
-                        Halo, <span th:text="${nama}">User</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal"
-                               data-bs-target="#logoutModal">
-                                <i class="bi bi-box-arrow-right"></i> Logout
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                            <i class="bi bi-person-circle me-1"></i>
+                            Halo, <span th:text="${nama}">User</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal"
+                                data-bs-target="#logoutModal">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<!-- CONTENT -->
-<div class="container-fluid main-content">
-    <h3 class="mb-2">Manajemen User</h3>
-    <hr class="my-2">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahUserModal">
-            <i class="bi bi-plus-circle"></i> Tambah User
-        </button>
-    </div>
-
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>#</th>
-                <th>Nama</th>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="user, iterStat : ${userList}">
-                <td th:text="${iterStat.count}"></td>
-                <td th:text="${user.nama}"></td>
-                <td th:text="${user.username}"></td>
-                <td th:text="${user.role}"></td>
-                <td>
-                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                            th:data-bs-target="'#editModal-' + ${user.id}">
-                        <i class="bi bi-pencil-fill"></i>
-                    </button>
-                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                            th:data-bs-target="'#deleteModal-' + ${user.id}">
-                        <i class="bi bi-trash-fill"></i>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<!-- MODAL TAMBAH USER -->
-<div class="modal fade" id="tambahUserModal" tabindex="-1">
-    <div class="modal-dialog">
-        <form th:action="@{/admin/admin_user/tambah}" th:object="${user}" method="post" class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Tambah User</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <div class="container-fluid main-content flex-fill">
+        <h3 class="mb-2">Manajemen User</h3>
+        <hr class="my-2">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div>
+                <button class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#tambahUserModal">
+                    <i class="bi bi-plus-circle"></i>
+                </button>
             </div>
-            <div class="modal-body">
-                <div class="mb-3"><label class="form-label">Nama</label><input type="text" class="form-control" th:field="*{nama}" required></div>
-                <div class="mb-3"><label class="form-label">Username</label><input type="text" class="form-control" th:field="*{username}" required></div>
-                <div class="mb-3"><label class="form-label">Password</label><input type="password" class="form-control" th:field="*{password}" required></div>
-                <div class="mb-3">
-                    <label class="form-label">Role</label>
-                    <select class="form-select" th:field="*{role}">
-                        <option value="TEKNISI">Teknisi</option>
-                        <option value="ADMIN">Admin</option>
-                    </select>
-                </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <select id="filterRole" class="form-select mb-2" style="width: 200px;">
+                    <option value="">-- Semua Role --</option>
+                    <option value="ADMIN">Admin</option>
+                    <option value="TEKNISI">Teknisi</option>
+                </select>
+                <input type="text" id="searchInput" class="form-control mb-2" placeholder="Search...">
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
 
-<!-- MODAL EDIT USER -->
-<div th:each="user : ${userList}">
-    <div class="modal fade" th:id="'editModal-' + ${user.id}" tabindex="-1">
+        <table id="userTable" class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nama</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user, iterStat : ${userList}">
+                    <td th:text="${user.nama}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.role}"></td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                th:data-bs-target="'#editModal-' + ${user.id}">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                th:data-bs-target="'#deleteModal-' + ${user.id}">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="tambahUserModal" tabindex="-1">
         <div class="modal-dialog">
-            <form th:action="@{'/admin/admin_user/edit/' + ${user.id}}" method="post" class="modal-content">
+            <form th:action="@{/admin/admin_user/tambah}" th:object="${user}" method="post" class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit User</h5>
+                    <h5 class="modal-title">Tambah User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3"><label>Nama</label><input type="text" name="nama" th:value="${user.nama}" class="form-control" required></div>
-                    <div class="mb-3"><label>Username</label><input type="text" name="username" th:value="${user.username}" class="form-control" required></div>
+                    <div class="mb-3"><label class="form-label">Nama</label><input type="text" class="form-control" th:field="*{nama}" required></div>
+                    <div class="mb-3"><label class="form-label">Username</label><input type="text" class="form-control" th:field="*{username}" required></div>
+                    <div class="mb-3"><label class="form-label">Password</label><input type="password" class="form-control" th:field="*{password}" required></div>
                     <div class="mb-3">
-                        <label>Role</label>
-                        <select name="role" class="form-select" required>
-                            <option th:selected="${user.role == 'ADMIN'}">ADMIN</option>
-                            <option th:selected="${user.role == 'TEKNISI'}">TEKNISI</option>
+                        <label class="form-label">Role</label>
+                        <select class="form-select" th:field="*{role}">
+                            <option value="">-- Pilih Role --</option>
+                            <option value="TEKNISI">Teknisi</option>
+                            <option value="ADMIN">Admin</option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
     </div>
-</div>
 
-<!-- MODAL DELETE USER -->
-<div th:each="user : ${userList}">
-    <div class="modal fade" th:id="'deleteModal-' + ${user.id}" tabindex="-1">
+    <div th:each="user : ${userList}">
+        <div class="modal fade" th:id="'editModal-' + ${user.id}" tabindex="-1">
+            <div class="modal-dialog">
+                <form th:action="@{'/admin/admin_user/edit/' + ${user.id}}" method="post" class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3"><label>Nama</label><input type="text" name="nama" th:value="${user.nama}" class="form-control" required></div>
+                        <div class="mb-3"><label>Username</label><input type="text" name="username" th:value="${user.username}" class="form-control" required></div>
+                        <div class="mb-3">
+                            <label>Role</label>
+                            <select name="role" class="form-select" required>
+                                <option th:selected="${user.role == 'ADMIN'}">Admin</option>
+                                <option th:selected="${user.role == 'TEKNISI'}">Teknisi</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:each="user : ${userList}">
+        <div class="modal fade" th:id="'deleteModal-' + ${user.id}" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <form th:action="@{'/admin/admin_user/hapus/' + ${user.id}}" method="post" class="modal-content">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <div class="modal-header">
+                        <h5 class="modal-title">Konfirmasi Hapus</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Yakin ingin menghapus user - <strong th:text="${user.username}"></strong>?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <form th:action="@{'/admin/admin_user/hapus/' + ${user.id}}" method="post" class="modal-content">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <form th:action="@{/logout}" method="post" class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    <h5 class="modal-title">Konfirmasi Logout</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
-                    <p>Yakin ingin menghapus user - <strong th:text="${user.username}"></strong>?</p>
-                </div>
+                <div class="modal-body">Kamu yakin ingin logout?</div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger">Ya, Logout</button>
                 </div>
             </form>
         </div>
     </div>
-</div>
+    <script>
+        document.getElementById("searchInput").addEventListener("keyup", function () {
+            const input = this.value.toLowerCase();
+            const rows = document.querySelectorAll("#userTable tbody tr");
 
-<!-- MODAL LOGOUT -->
-<div class="modal fade" id="logoutModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <form th:action="@{/logout}" method="post" class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Konfirmasi Logout</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">Kamu yakin ingin logout?</div>
-            <div class="modal-footer">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-danger">Ya, Logout</button>
-            </div>
-        </form>
-    </div>
-</div>
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(input) ? "" : "none";
+            });
+        });
+    </script>
+    <script>
+        document.getElementById("filterRole").addEventListener("change", function () {
+            const role = this.value.toLowerCase();
+            const rows = document.querySelectorAll("#userTable tbody tr");
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            rows.forEach(row => {
+                const kolomRole = row.querySelectorAll("td")[2];
+                if (kolomRole) {
+                    const roleText = kolomRole.textContent.toLowerCase();
+                    row.style.display = roleText.includes(role) || role === "" ? "" : "none";
+                }
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+      <div class="container">
+        <p class="mb-0">© 2025 TRSystem App | by Kelompok 3 - Perdi Ruhiyat - Wendi Rahmawan - Yeremia Adrianto</p>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>

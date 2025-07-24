@@ -1,6 +1,8 @@
 package com.example.trsystem.controller;
 
 import java.security.Principal;
+
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.trsystem.model.RekapPerawatan;
 import com.example.trsystem.model.User;
+import com.example.trsystem.repository.RekapPerawatanRepository;
 import com.example.trsystem.service.HardwareService;
 import com.example.trsystem.service.RekapPerawatanService;
 import com.example.trsystem.service.StandarWaktuService;
@@ -31,14 +34,28 @@ public class TeknisiController {
     private RekapPerawatanService rekapService;
 
     @Autowired
+    private RekapPerawatanRepository repoRekap;
+
+    @Autowired
     private StandarWaktuService swService;
 
     @GetMapping("/teknisi/teknisi_dashboard")
     public String teknisiDashboard(Model model, Principal principal) {
         String username = principal.getName();
         User user = userService.getUserByUsername(username);
-        
+        long totalRekap = repoRekap.countByTeknisi(user);
+
+        model.addAttribute("totalRekap", totalRekap);
         model.addAttribute("nama", user.getNama());
+
+        long totalTepatWaktu = rekapService.countByStatusAndTeknisi("Tepat Waktu", user);
+        long totalTerlambat = rekapService.countByStatusAndTeknisi("Terlambat", user);
+
+        model.addAttribute("totalTepatWaktu", totalTepatWaktu);
+        model.addAttribute("totalTerlambat", totalTerlambat);
+         
+        Map<String, Long> rekapPerBulan = rekapService.getRekapPerMonthByTeknisi(user);
+        model.addAttribute("rekapPerBulan", rekapPerBulan);
         return "teknisi/teknisi_dashboard";
     }
     
@@ -60,7 +77,7 @@ public class TeknisiController {
         model.addAttribute("user", user);
         model.addAttribute("nama", user.getNama());
         model.addAttribute("hardwareList", hardwareService.getAllHardware());
-        model.addAttribute("rekapList", rekapService.getAllRekap());
+        model.addAttribute("rekapList", rekapService.getRekapByTeknisi(user));
         model.addAttribute("listSw", swService.getAllSw());
         return "teknisi/teknisi_rekap";
     }

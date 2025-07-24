@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface HardwareRepository extends JpaRepository<Hardware, Long> {
     Optional<Hardware> findByHardwareId(String hardwareId);
+    long countByKategori(String kategori);
 }
