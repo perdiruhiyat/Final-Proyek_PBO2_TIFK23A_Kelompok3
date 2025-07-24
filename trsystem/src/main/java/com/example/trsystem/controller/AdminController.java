@@ -3,10 +3,15 @@ package com.example.trsystem.controller;
 import com.example.trsystem.model.Hardware;
 import com.example.trsystem.model.StandarWaktu;
 import com.example.trsystem.model.User;
+import com.example.trsystem.repository.HardwareRepository;
+import com.example.trsystem.repository.RekapPerawatanRepository;
 import com.example.trsystem.service.HardwareService;
 import com.example.trsystem.service.RekapPerawatanService;
 import com.example.trsystem.service.StandarWaktuService;
 import com.example.trsystem.service.UserService;
+
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,18 +30,35 @@ public class AdminController {
     private HardwareService hardwareService;
 
     @Autowired
+    private HardwareRepository hwRepo;
+
+    @Autowired
     private StandarWaktuService swService;
 
     @Autowired
     private RekapPerawatanService rekapService;
 
+    @Autowired
+    private RekapPerawatanRepository repoRekap;
+
     @GetMapping("/admin/admin_dashboard")
-    public String adminDashboard() {
+    public String adminDashboard(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userService.getUserByUsername(username);
+
+        long totalHardware = hwRepo.count();
+        long totalRekap = repoRekap.count();
+        model.addAttribute("totalRekap", totalRekap);
+        model.addAttribute("totalHardware", totalHardware);
+        model.addAttribute("nama", user.getNama());
         return "admin/admin_dashboard";
     }
 
     @GetMapping("/admin/admin_user")
-    public String adminUser(Model model) {
+    public String adminUser(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userService.getUserByUsername(username);
+        model.addAttribute("nama", user.getNama());
         model.addAttribute("user", new User());
         model.addAttribute("userList", userService.getAllUsers());
         return "admin/admin_user";
@@ -67,7 +89,10 @@ public class AdminController {
     }
 
     @GetMapping("/admin/admin_hardware")
-    public String adminHardware(Model model) {
+    public String adminHardware(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userService.getUserByUsername(username);
+        model.addAttribute("nama", user.getNama());
         model.addAttribute("hardwareBaru", new Hardware());
         model.addAttribute("hardwareList", hardwareService.getAllHardware());
         return "admin/admin_hardware";
@@ -99,7 +124,10 @@ public class AdminController {
     }
 
     @GetMapping("/admin/admin_standarwaktu")
-    public String adminStandarWaktu(Model model) {
+    public String adminStandarWaktu(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userService.getUserByUsername(username);
+        model.addAttribute("nama", user.getNama());
         model.addAttribute("standarwaktu", new StandarWaktu());
         model.addAttribute("listSw", swService.getAllSw());
         return "admin/admin_standarwaktu";
@@ -127,7 +155,10 @@ public class AdminController {
     }
 
     @GetMapping("/admin/admin_rekap")
-    public String adminRekap(Model model) {
+    public String adminRekap(Model model,Principal principal) {
+        String username = principal.getName();
+        User user = userService.getUserByUsername(username);
+        model.addAttribute("nama", user.getNama());
         model.addAttribute("rekapList", rekapService.getAllRekap());
         return "admin/admin_rekap";
     }

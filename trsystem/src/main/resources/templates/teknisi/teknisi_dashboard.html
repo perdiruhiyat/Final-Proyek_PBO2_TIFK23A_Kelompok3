@@ -6,49 +6,57 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        body {display: flex; min-height: 100vh; margin: 0;}
-        .sidebar {width: 200px;background-color: #343a40;color: white;}
-        .sidebar .nav-link {color: white;display: flex;align-items: center;gap: 10px;}
-        .sidebar .nav-link.active {background-color: #495057;}
-        .sidebar .nav-link:hover {background-color: #495057;}
-        .content {flex-grow: 1;padding: 20px;transition: margin-left 0.3s;}
+        body {margin: 0; padding-top: 50px; overflow-x: hidden;}
+        .navbar-nav {display: flex; gap: 1rem;}
+        .navbar .nav-link {color: black; transition: background-color 0.2s ease;}
+        .navbar .nav-link:hover {background-color: darkgrey; color: white; border-radius: 20px;}
+        .navbar .nav-link.active {background-color: grey; color: white;border-radius: 20px;}
+        .main-content {padding: 15px;}
+        .table-responsive {overflow-x: auto; -webkit-overflow-scrolling: touch;}
     </style>
 </head>
 <body>
 
-<div id="sidebar" class="sidebar d-flex flex-column p-3">
-    <h4 class="text-white">TRSystem</h4>
-    <hr class="text-white">
-    <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="/teknisi/teknisi_dashboard" class="nav-link active">
-                <i class="bi bi-speedometer2"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
-        <li>
-            <a href="/teknisi/teknisi_hardware" class="nav-link">
-                <i class="bi bi-cpu"></i>
-                <span>Hardware</span>
-            </a>
-        </li>
-        <li>
-            <a href="/teknisi/teknisi_rekap" class="nav-link">
-                <i class="bi bi-journal-text"></i>
-                <span>Rekap</span>
-            </a>
-        </li>
-        <li>
-            <a class="nav-link text-danger" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                <i class="bi bi-box-arrow-right"></i>
-                <strong>Logout</strong>
-            </a>
-        </li>
-    </ul>
-</div>
+<nav class="navbar navbar-expand-lg bg-white fixed-top border-bottom shadow-sm px-3">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="/teknisi/teknisi_dashboard">TRSystem</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-<div id="mainContent" class="content">
-    <h3 class="mb-4">Selamat datang, Teknisi!</h3>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+            <!-- Menu utama -->
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link active" href="/teknisi/teknisi_dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="/teknisi/teknisi_hardware"><i class="bi bi-cpu"></i> Hardware</a></li>
+                <li class="nav-item"><a class="nav-link" href="/teknisi/teknisi_rekap"><i class="bi bi-journal-text"></i> Rekap</a></li>
+            </ul>
+
+            <!-- User login -->
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <i class="bi bi-person-circle me-1"></i>
+                        Halo, <span th:text="${nama}">User</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal"
+                               data-bs-target="#logoutModal">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid main-content">
+    <h3 class="mb-4">Selamat datang, <span th:text="${nama}"></span>!</h3>
     <div class="row g-3">
         <div class="col-md-4">
             <div class="card shadow-sm">

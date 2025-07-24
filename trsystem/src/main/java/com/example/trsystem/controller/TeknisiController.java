@@ -34,12 +34,20 @@ public class TeknisiController {
     private StandarWaktuService swService;
 
     @GetMapping("/teknisi/teknisi_dashboard")
-    public String teknisiDashboard() {
+    public String teknisiDashboard(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userService.getUserByUsername(username);
+        
+        model.addAttribute("nama", user.getNama());
         return "teknisi/teknisi_dashboard";
     }
     
     @GetMapping("/teknisi/teknisi_hardware")
-    public String teknisiHardware(Model model) {
+    public String teknisiHardware(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userService.getUserByUsername(username);
+        
+        model.addAttribute("nama", user.getNama());
         model.addAttribute("hardwareList", hardwareService.getAllHardware());
         return "teknisi/teknisi_hardware";
     }
@@ -50,6 +58,7 @@ public class TeknisiController {
         User user = userService.getUserByUsername(username);
         model.addAttribute("rekapBaru", new RekapPerawatan());
         model.addAttribute("user", user);
+        model.addAttribute("nama", user.getNama());
         model.addAttribute("hardwareList", hardwareService.getAllHardware());
         model.addAttribute("rekapList", rekapService.getAllRekap());
         model.addAttribute("listSw", swService.getAllSw());
@@ -58,8 +67,8 @@ public class TeknisiController {
 
     @PostMapping("teknisi/teknisi_rekap/tambah")
     public String tambahRekap(@ModelAttribute("rekapBaru") RekapPerawatan rekap, Principal principal) {
-        String username = principal.getName(); // Ambil username dari yang login
-        User user = userService.getUserByUsername(username); // Ambil user-nya
+        String username = principal.getName();
+        User user = userService.getUserByUsername(username);
 
         rekap.setTeknisi(user);
         rekapService.save(rekap);
