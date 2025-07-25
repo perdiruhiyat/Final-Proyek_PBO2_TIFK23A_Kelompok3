@@ -8,7 +8,7 @@
 - **Ketua**
 - **Perdi Ruhiyat (23552011207)**
 - **Anggota**
-- **Wendi Rahmawan**
+- **Wendi Rahmawan (23552011208)**
 - **Yeremia Adrianto S (23552011227)**
 - **Studi Kasus:** Aplikasi TRSystem (Teknisi Rekap System)
 
@@ -18,14 +18,35 @@
 
 ## 🧾 Penjelasan Studi Kasus
 
-Aplikasi ini dibangun menggunakan Java Spring Boot dan MySQL dengan konsep MVC. Fitur utama aplikasi:
+Aplikasi TRSystem (singkatan dari Technical Report System) adalah sistem berbasis web yang digunakan untuk mencatat, mengelola, dan merekap aktivitas perawatan hardware oleh teknisi dalam sebuah organisasi. Sistem ini dirancang dengan pendekatan berbasis OOP (Object-Oriented Programming) dan dibangun menggunakan teknologi Spring Boot, Thymeleaf, dan MySQL.
 
-- Login & register user
-- CRUD data perawatan
-- Relasi antara `RekapPerawatan`, `StandarWaktu`, `User`, dan `Hardware`
-- Dashboard jumlah perawatan berdasarkan status dan teknisi
-- Role-based access (admin vs teknisi)
+Fitur utama dari aplikasi ini meliputi:
 
+✅ Login User (dengan enkripsi password)
+
+👥 Manajemen user (Admin dapat menambahkan/mengedit user teknisi)
+
+🛠️ Manajemen data hardware
+
+📊 Standar waktu perawatan berdasarkan jenis aktivitas
+
+📋 Rekap perawatan oleh teknisi yang mencatat aktivitas seperti:
+
+- Tanggal & jam perawatan
+
+- Durasi dan status
+
+- Hardware terkait
+
+- Keterangan tambahan
+
+🔎 Fitur filter dan rekap berdasarkan teknisi maupun status
+
+🔐 Otentikasi & otorisasi menggunakan Spring Security
+
+Aplikasi ini tidak hanya sebagai alat pencatat kerja teknisi, tetapi juga sebagai alat evaluasi performa kerja melalui perbandingan durasi aktual perawatan dengan standar waktu yang telah ditentukan.
+
+Sistem ini dirancang dengan arsitektur MVC (Model-View-Controller) dan memanfaatkan fitur OOP seperti inheritance, encapsulation, polymorphism, dan abstraction agar kode tetap modular, reusable, dan maintainable.
 ---
 
 ## 💡 Penjelasan 4 Pilar OOP dalam Studi Kasus
