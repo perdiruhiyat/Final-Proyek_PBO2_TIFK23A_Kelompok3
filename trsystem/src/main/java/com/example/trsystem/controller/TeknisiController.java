@@ -93,7 +93,7 @@ public class TeknisiController {
     }
 
     @PostMapping("/teknisi/teknisi_rekap/edit/{id}")
-    public String updateRekap(@ModelAttribute("rekapBaru") RekapPerawatan rekap) {
+    public String updateRekap(@ModelAttribute RekapPerawatan rekap) {
         rekapService.save(rekap);
         return "redirect:/teknisi/teknisi_rekap";
     }

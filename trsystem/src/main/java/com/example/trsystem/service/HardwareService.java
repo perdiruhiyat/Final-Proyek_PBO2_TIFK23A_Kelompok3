@@ -90,19 +90,21 @@ public class HardwareService {
     }
 
     public String generateHardwareId(String kategori) {
-    String prefix = switch (kategori.toLowerCase()) {
-        case "komputer", "laptop" -> "PC";
-        case "printer" -> "PR";
-        case "cctv" -> "CAM";
-        case "switch" -> "SW";
-        case "switch poe" -> "SWP";
-        case "access point" -> "AP";
-        case "mesin absen" -> "MA";
-        default -> "HW";
-    };
+        String prefix = switch (kategori.toLowerCase()) {
+            case "komputer", "laptop" -> "PC";
+            case "printer" -> "PR";
+            case "cctv" -> "CAM";
+            case "switch" -> "SW";
+            case "switch poe" -> "SWP";
+            case "access point" -> "AP";
+            case "mesin absen" -> "MA";
+            default -> "HW";
+        };
 
-    long count = hardwareRepository.countByKategori(kategori);
-        return String.format("%s-%03d", prefix, count + 1);
+        Integer maxNumber = hardwareRepository.findMaxNumberByPrefix(prefix);
+        int nextNumber = (maxNumber != null ? maxNumber : 0) + 1;
+
+        return String.format("%s-%03d", prefix, nextNumber);
     }
 
     public Map<String, Long> getKategoriChart() {
