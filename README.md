@@ -6,10 +6,14 @@
 ## 👤 Profil
 - **Kelompok 3**
 - **Ketua**
-      -**Perdi Ruhiyat (23552011207)**
+  
+  - **Perdi Ruhiyat (23552011207)**
 - **Anggota**
-      - **Wendi Rahmawan (23552011208)**
-      - **Yeremia Adrianto S (23552011227)**
+  
+   - **Wendi Rahmawan (23552011208)**
+  
+   - **Yeremia Adrianto S (23552011227)**
+  
 - **Studi Kasus:** Aplikasi TRSystem (Teknisi Rekap System)
 
 ## 📋 Judul Studi Kasus
