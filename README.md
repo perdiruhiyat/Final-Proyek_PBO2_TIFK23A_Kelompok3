@@ -48,10 +48,7 @@ Fitur utama dari aplikasi ini meliputi:
 
 🔐 Otentikasi & otorisasi menggunakan Spring Security
 
-Aplikasi ini tidak hanya sebagai alat pencatat kerja teknisi, tetapi juga sebagai alat evaluasi performa kerja melalui perbandingan durasi aktual perawatan dengan standar waktu yang telah ditentukan.
 
-Sistem ini dirancang dengan arsitektur MVC (Model-View-Controller) dan memanfaatkan fitur OOP seperti inheritance, encapsulation, polymorphism, dan abstraction agar kode tetap modular, reusable, dan maintainable.
----
 
 ## 💡 Penjelasan 4 Pilar OOP dalam Studi Kasus
 
