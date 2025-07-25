@@ -93,10 +93,14 @@ public class TeknisiController {
     }
 
     @PostMapping("/teknisi/teknisi_rekap/edit/{id}")
-    public String updateRekap(@ModelAttribute RekapPerawatan rekap) {
+    public String updateRekap(@ModelAttribute("rekapBaru") RekapPerawatan rekap, Principal principal) {
+        String username = principal.getName();
+        User user = userService.getUserByUsername(username);
+        rekap.setTeknisi(user);
         rekapService.save(rekap);
         return "redirect:/teknisi/teknisi_rekap";
     }
+
 
     @PostMapping("/teknisi/teknisi_rekap/hapus/{id}")
     public String deleteRekap(@PathVariable Long id) {

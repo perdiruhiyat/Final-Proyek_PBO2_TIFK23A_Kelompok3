@@ -1,8 +1,8 @@
 body {margin: 0; padding-top: 50px; overflow-x: hidden;}
 .navbar-nav {display: flex; gap: 1rem;}
 .navbar .nav-link {color: black; transition: background-color 0.2s ease;}
-.navbar .nav-link:hover {background-color: darkgrey; color: white; border-radius: 12px;}
-.navbar .nav-link.active {background-color: grey; color: white; border-radius: 12px;}
+.navbar .nav-link:hover {background-color: #00adb5; color: white; border-radius: 12px;}
+.navbar .nav-link.active {background-color: #008a90; color: white; border-radius: 12px;}
 .main-content {padding: 15px;}
 .table-responsive {overflow-x: auto; -webkit-overflow-scrolling: touch;}
 .chart-container {position: relative; width: 100%; max-width: 100%; height: auto;}
@@ -11,3 +11,23 @@ canvas {max-height: 300px;}
 .modal-body input,
 .modal-body select,
 .modal-body textarea {font-size: 0.9rem;}}
+
+.btn-primary {
+  background-color: #008a90;
+  border: none;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #006c70;
+}
+
+.btn-secondary {
+  background-color: #75C2C5;
+  border: none;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #4db1b4;
+}
