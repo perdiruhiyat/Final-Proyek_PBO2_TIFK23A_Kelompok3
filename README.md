@@ -12,19 +12,19 @@
 - **Yeremia Adrianto S (23552011227)**
 - **Studi Kasus:** Aplikasi TRSystem (Teknisi Rekap System)
 
-## 📌 Judul Studi Kasus
+## 📋 Judul Studi Kasus
 
-**Aplikasi TRSystem (Teknisi Rekap System)**
+**TRSystem**: Aplikasi rekap perawatan perangkat keras (hardware) dengan autentikasi login, manajemen teknisi, dan standar waktu pengerjaan.
 
-## 📝 Penjelasan Studi Kasus
+## 🧾 Penjelasan Studi Kasus
 
-TRSystem adalah aplikasi berbasis web yang digunakan untuk mencatat dan memantau aktivitas perawatan yang dilakukan oleh teknisi. Aplikasi ini memiliki fitur:
+Aplikasi ini dibangun menggunakan Java Spring Boot dan MySQL dengan konsep MVC. Fitur utama aplikasi:
 
-- Login user menggunakan Spring Security  
-- CRUD data teknisi (User)  
-- CRUD data Standar Waktu perbaikan  
-- CRUD data Rekap Perawatan oleh teknisi  
-- Statistik pekerjaan teknisi per bulan  
+- Login & register user
+- CRUD data perawatan
+- Relasi antara `RekapPerawatan`, `StandarWaktu`, `User`, dan `Hardware`
+- Dashboard jumlah perawatan berdasarkan status dan teknisi
+- Role-based access (admin vs teknisi)
 
 ---
 
@@ -32,58 +32,72 @@ TRSystem adalah aplikasi berbasis web yang digunakan untuk mencatat dan memantau
 
 ### 1. 🧬 Inheritance
 
-Inheritance adalah pewarisan properti dan method dari sebuah class induk ke class turunannya. Dalam aplikasi ini, penerapan inheritance terlihat saat `UserService` mewarisi perilaku dari interface `UserDetailsService` milik Spring Security.
+Inheritance adalah pewarisan properti dan method dari class lain. Dalam studi kasus ini, `UserService` mewarisi interface `UserDetailsService` milik Spring Security untuk keperluan autentikasi pengguna.
 
 ```java
 public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // implementasi login user
+        // implementasi method
     }
 }
+```
 
-### 2. 🧬 Encapsulation
-Encapsulation berarti menyembunyikan data agar tidak bisa diakses langsung dari luar class, melainkan melalui getter dan setter. Ini dapat dilihat di model StandarWaktu yang memiliki field privat dan setter/getter.
+---
 
-public class StandarWaktu {
-    private String deskripsi;
-    private Integer waktu;
+### 2. 🔒 Encapsulation
 
-    public String getDeskripsi() {
-        return deskripsi;
+Encapsulation adalah membungkus data dan method dalam satu unit, serta menyembunyikan akses langsung ke data. Digunakan di model seperti `User`, di mana atribut dibuat `private` dan hanya dapat diakses lewat method getter/setter.
+
+```java
+public class User {
+    private String username;
+    private String password;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setDeskripsi(String deskripsi) {
-        this.deskripsi = deskripsi;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
+```
 
-### 3. 🧬 Polymorphs
-Polymorphism memungkinkan sebuah objek memiliki banyak bentuk, biasanya melalui method overriding. Contohnya pada class UserService yang mengimplementasikan method loadUserByUsername dari UserDetailsService.
+---
 
+### 3. 🔁 Polymorphism
+
+Polymorphism memungkinkan objek memiliki banyak bentuk. Contohnya, `UserService` mengimplementasikan interface `UserDetailsService`. Dengan ini, objek `UserService` bisa diperlakukan sebagai `UserDetailsService`.
+
+```java
 @Override
 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userRepository.findByUsername(username)
-        .orElseThrow(() -> new UsernameNotFoundException("Username tidak ditemukan"));
-
     return new org.springframework.security.core.userdetails.User(
         user.getUsername(),
         user.getPassword(),
         Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
     );
 }
+```
 
-### 4. 🧬 Abstraksi
-Abstraksi menyembunyikan detail implementasi dan hanya menampilkan fungsi penting. Contohnya adalah penggunaan StandarWaktuService, di mana controller cukup memanggil method tanpa tahu bagaimana data disimpan di database
+---
 
-public void createStandarWaktu(String deskripsi, Integer waktu) {
-    StandarWaktu sw = new StandarWaktu();
-    sw.setDeskripsi(deskripsi);
-    sw.setWaktu(waktu);
-    swRepo.save(sw);
+### 4. 🧩 Abstraction
+
+Abstraction menyembunyikan detail implementasi. Contoh nyatanya adalah `UserRepository`, `RekapPerawatanRepository`, dan `StandarWaktuRepository` yang mewarisi dari `JpaRepository`. Kita bisa langsung menggunakan method seperti `findByUsername()` atau `findByTeknisi()` tanpa tahu bagaimana query SQL-nya dibuat.
+
+```java
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByUsername(String username);
 }
+```
 
-🎥 Demo Proyek
-GitHub: Final-Proyek_PBO2_TIFK23A_Kelompok3
+---
 
-YouTube: Demo TRSystem
+## 🎥 Demo Proyek
+
+<ul>
+  <li><strong>GitHub:</strong> <a href="https:github.com/perdiruhiyat/Final-Proyek_PBO2_TIFK23A_Kelompok3">https://github.com/perdiruhiyat/Final-Proyek_PBO2_TIFK23A_Kelompok3</a></li>
+  <li><strong>YouTube:</strong> 
+</ul>
