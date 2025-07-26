@@ -110,8 +110,7 @@ public class UserService implements UserDetailsService {
 
 ### 2. 🔒 Encapsulation
 
-Encapsulation adalah membungkus data dan method dalam satu unit, serta menyembunyikan akses langsung ke data. Digunakan di model seperti `User`, di mana atribut dibuat `private` dan hanya dapat diakses lewat method getter/setter.
-
+Encapsulation adalah membungkus data dan method dalam satu unit, serta menyembunyikan akses langsung ke data.Setiap class model seperti `User`, `Hardware`, dan `RekapPerawatan` menggunakan modifier `private` untuk field-nya dan menyediakan getter/setter sebagai akses.
 ```java
 public class User {
     private String username;
@@ -156,7 +155,30 @@ public interface UserRepository extends JpaRepository<User, Long> {
 }
 ```
 
+Selain dari UserRepository, abstraksi juga diterapkan pada beberapa service seperti HardwareService dan RekapPerawatanService.Pada contoh ini, pengguna service tidak perlu mengetahui bagaimana `findAll()` atau `deleteById()` bekerja. Mereka cukup memanggil method `getAllHardware()` atau `deleteHardware()` yang menyederhanakan penggunaan logika database.
+```java
+@Service
+public class HardwareService {
+
+    @Autowired
+    private HardwareRepository hwRepo;
+
+    public List<Hardware> getAllHardware() {
+        return hwRepo.findAll();
+    }
+
+    public void deleteHardware(Long id) {
+        hwRepo.deleteById(id);
+    }
+
+    // dst...
+}
+
+```
+
 ---
+
+
 
 ## 🎥 Demo Proyek
 
