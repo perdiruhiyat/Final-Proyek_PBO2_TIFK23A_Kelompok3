@@ -14,40 +14,81 @@
   
    - **Yeremia Adrianto S (23552011227)**
   
-- **Studi Kasus:** Aplikasi TRSystem (Teknisi Rekap System)
+- **Studi Kasus:** Aplikasi TRSystem (Technical Report System)
 
 ## 📋 Judul Studi Kasus
 
-**TRSystem**: Aplikasi rekap perawatan perangkat keras (hardware) dengan autentikasi login, manajemen teknisi, dan standar waktu pengerjaan.
+**TRSystem**
 
 ## 🧾 Penjelasan Studi Kasus
 
-Aplikasi TRSystem (singkatan dari Technical Report System) adalah sistem berbasis web yang digunakan untuk mencatat, mengelola, dan merekap aktivitas perawatan hardware oleh teknisi dalam sebuah organisasi. Sistem ini dirancang dengan pendekatan berbasis OOP (Object-Oriented Programming) dan dibangun menggunakan teknologi Spring Boot, Thymeleaf, dan MySQL.
+Aplikasi TRSystem (singkatan dari Technical Report System) adalah sistem berbasis web yang digunakan untuk mencatat, mengelola, dan merekap aktivitas perawatan hardware oleh teknisi dalam sebuah organisasi. Sistem ini dirancang dengan pendekatan berbasis OOP (Object-Oriented Programming) dan dibangun menggunakan teknologi Spring Boot, Thymeleaf, dan MySQL. Aplikasi TRSystem dirancang dengan sistem login berbasis role, sehingga setiap jenis user memiliki hak akses dan fitur yang berbeda. Role yang digunakan adalah:
 
-Fitur utama dari aplikasi ini meliputi:
 
-✅ Login User (dengan enkripsi password)
+🎯 Role-Based Usage Aplikasi TRSystem
 
-👥 Manajemen user (Admin dapat menambahkan/mengedit user teknisi)
+**Role :**
 
-🛠️ Manajemen data hardware
+- Admin
 
-📊 Standar waktu perawatan berdasarkan jenis aktivitas
+- Teknisi
+  
 
-📋 Rekap perawatan oleh teknisi yang mencatat aktivitas seperti:
+👑 Admin Role
+    Admin memiliki akses penuh untuk mengelola data dan pengguna dalam sistem. Fitur-fitur yang dapat digunakan oleh Admin antara lain:
 
-- Tanggal & jam perawatan
+✅ Login Sebagai Admin
+🔐 Autentikasi menggunakan username dan password terenkripsi dengan BCrypt.
 
-- Durasi dan status
+👥 Manajemen User
 
-- Hardware terkait
+  - Menambahkan user teknisi baru
 
-- Keterangan tambahan
+  - Mengedit data user teknisi (nama, username, role)
 
-🔎 Fitur filter dan rekap berdasarkan teknisi maupun status
+  - Menghapus user teknisi
 
-🔐 Otentikasi & otorisasi menggunakan Spring Security
+🛠️ Manajemen Data Hardware
 
+  - Menambah, mengedit, dan menghapus data perangkat (hardware)
+
+📊 Manajemen Standar Waktu Perawatan
+
+  - Menambah, mengedit, dan menghapus standar waktu berdasarkan deskripsi aktivitas
+
+📋 Monitoring Rekap Perawatan
+
+  - Melihat semua rekap perawatan dari semua teknisi
+
+  - Melihat status dan durasi perawatan teknisi
+
+  - Melakukan validasi atau review data teknisi
+
+🧑‍🔧 Teknisi Role
+    Teknisi adalah user yang bertugas melakukan perawatan dan mengisi laporan melalui sistem. Fitur yang tersedia untuk teknisi antara lain:
+
+✅ Login Sebagai Teknisi
+🔐 Autentikasi untuk masuk dan mengakses halaman teknisi
+
+📝 Input Rekap Perawatan
+
+  - Mengisi tanggal dan waktu perawatan
+
+  - Memilih hardware yang dirawat
+
+  - Memasukkan deskripsi dan keterangan perawatan
+  
+  - Menentukan durasi dan status kegiatan
+
+📜 Melihat Riwayat Rekap Pribadi
+
+  - Menampilkan semua kegiatan perawatan yang pernah dilakukan
+
+  - Melihat durasi dan hasil perawatan yang sudah diinput
+
+⏱️ Standar Waktu Referensi
+
+  - Dapat melihat standar waktu untuk tiap jenis kegiatan (untuk membandingkan durasi aktual)
 
 
 ## 💡 Penjelasan 4 Pilar OOP dalam Studi Kasus
