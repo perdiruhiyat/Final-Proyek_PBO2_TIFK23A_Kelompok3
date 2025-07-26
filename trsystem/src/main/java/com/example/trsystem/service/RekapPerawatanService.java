@@ -39,7 +39,7 @@ public class RekapPerawatanService {
     }
 
     public List<RekapPerawatan> getRekapByTeknisi(User teknisi) {
-        return rekapRepo.findByTeknisi(teknisi);
+        return rekapRepo.findByTeknisiOrderByTanggalLaporanAsc(teknisi);
     }
 
     public long countRekapByTeknisi(User teknisi) {
@@ -51,7 +51,7 @@ public class RekapPerawatanService {
     }
 
     public Map<String, Long> getRekapPerMonthByTeknisi(User teknisi) {
-        List<RekapPerawatan> rekapList = rekapRepo.findByTeknisi(teknisi);
+        List<RekapPerawatan> rekapList = rekapRepo.findByTeknisiOrderByTanggalLaporanAsc(teknisi);
 
         Map<Month, Long> monthMap = rekapList.stream()
         .collect(Collectors.groupingBy(
@@ -87,4 +87,10 @@ public class RekapPerawatanService {
             LinkedHashMap::new
         ));
     }
+
+    public String getMostContributorByMonth(int bulan) {
+    List<String> contributors = rekapRepo.findMostContributorByMonth(bulan);
+    return contributors.isEmpty() ? "-" : contributors.get(0);
+}
+
 }

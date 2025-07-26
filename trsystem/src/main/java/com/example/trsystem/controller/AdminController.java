@@ -1,6 +1,7 @@
 package com.example.trsystem.controller;
 
 import com.example.trsystem.model.Hardware;
+import com.example.trsystem.model.RekapPerawatan;
 import com.example.trsystem.model.StandarWaktu;
 import com.example.trsystem.model.User;
 import com.example.trsystem.repository.HardwareRepository;
@@ -11,6 +12,9 @@ import com.example.trsystem.service.StandarWaktuService;
 import com.example.trsystem.service.UserService;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +63,13 @@ public class AdminController {
 
         Map<String, Long> kategoriHardware = hardwareService.getKategoriChart();
         model.addAttribute("kategoriChart", kategoriHardware);
+
+        int bulanSekarang = LocalDate.now().getMonthValue();
+
+        String contributor = rekapService.getMostContributorByMonth(bulanSekarang);
+        model.addAttribute("mostContributor", contributor != null ? contributor : "-");
+
+        model.addAttribute("bulanSekarang", String.format("%02d", bulanSekarang));
         return "admin/admin_dashboard";
     }
 
@@ -100,9 +111,11 @@ public class AdminController {
     public String adminHardware(Model model, Principal principal) {
         String username = principal.getName();
         User user = userService.getUserByUsername(username);
+
+        List<Hardware> hardwareList = hwRepo.findByOrderByHardwareIdAsc();
         model.addAttribute("nama", user.getNama());
         model.addAttribute("hardwareBaru", new Hardware());
-        model.addAttribute("hardwareList", hardwareService.getAllHardware());
+        model.addAttribute("hardwareList", hardwareList);
         return "admin/admin_hardware";
     }
 
@@ -171,8 +184,19 @@ public class AdminController {
     public String adminRekap(Model model,Principal principal) {
         String username = principal.getName();
         User user = userService.getUserByUsername(username);
+        List<RekapPerawatan> rekapList = repoRekap.findAllByOrderByTanggalLaporanAsc();
         model.addAttribute("nama", user.getNama());
-        model.addAttribute("rekapList", rekapService.getAllRekap());
+        model.addAttribute("rekapList", rekapList);
         return "admin/admin_rekap";
     }
+
+    @GetMapping("/api/most-contributor")
+    @ResponseBody
+    public Map<String, String> getMostContributorAjax(@RequestParam("bulan") int bulan) {
+        String nama = rekapService.getMostContributorByMonth(bulan);
+        Map<String, String> response = new HashMap<>();
+        response.put("nama", nama != null ? nama : "-");
+        return response;
+    }
+
 }

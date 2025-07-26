@@ -11,7 +11,7 @@ canvas {max-height: 300px;}
 .modal-body input,
 .modal-body select,
 .modal-body textarea {font-size: 0.9rem;}}
-
+.text-primary-custom {color: #008a90 !important;}
 .btn-primary {
   background-color: #008a90;
   border: none;

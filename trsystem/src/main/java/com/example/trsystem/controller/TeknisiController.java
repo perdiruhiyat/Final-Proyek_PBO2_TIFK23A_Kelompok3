@@ -1,7 +1,7 @@
 package com.example.trsystem.controller;
 
 import java.security.Principal;
-
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.example.trsystem.model.Hardware;
 import com.example.trsystem.model.RekapPerawatan;
 import com.example.trsystem.model.User;
+import com.example.trsystem.repository.HardwareRepository;
 import com.example.trsystem.repository.RekapPerawatanRepository;
 import com.example.trsystem.service.HardwareService;
 import com.example.trsystem.service.RekapPerawatanService;
@@ -29,6 +31,9 @@ public class TeknisiController {
 
     @Autowired
     private HardwareService hardwareService;
+
+    @Autowired
+    private HardwareRepository hwRepo;
 
     @Autowired
     private RekapPerawatanService rekapService;
@@ -63,9 +68,9 @@ public class TeknisiController {
     public String teknisiHardware(Model model, Principal principal) {
         String username = principal.getName();
         User user = userService.getUserByUsername(username);
-        
+        List<Hardware> hardwareList = hwRepo.findByOrderByHardwareIdAsc();
         model.addAttribute("nama", user.getNama());
-        model.addAttribute("hardwareList", hardwareService.getAllHardware());
+        model.addAttribute("hardwareList", hardwareList);
         return "teknisi/teknisi_hardware";
     }
 
@@ -73,6 +78,7 @@ public class TeknisiController {
     public String teknisiRekap(Model model, Principal principal) {
         String username = principal.getName();
         User user = userService.getUserByUsername(username);
+
         model.addAttribute("rekapBaru", new RekapPerawatan());
         model.addAttribute("user", user);
         model.addAttribute("nama", user.getNama());

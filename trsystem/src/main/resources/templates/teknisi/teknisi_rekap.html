@@ -496,6 +496,70 @@
           });
       });
   </script>
+  <script>
+    // Update Hardware ID saat pilihan hardware berubah (versi edit)
+    function updateEditHardwareId(selectElement) {
+      const selectedOption = selectElement.options[selectElement.selectedIndex];
+      const hardwareId = selectedOption.getAttribute("data-hardwareid");
+
+      // ambil id modal dari select ID
+      const modal = selectElement.closest('.modal');
+      const inputHardwareId = modal.querySelector('#edit_hardware_id');
+      inputHardwareId.value = hardwareId;
+    }
+
+    // Isi otomatis standar waktu dari parameter waktu (versi edit)
+    function isiWaktuOtomatisEdit(selectElement) {
+      const selectedOption = selectElement.options[selectElement.selectedIndex];
+      const waktu = selectedOption.getAttribute("data-waktu");
+
+      const modal = selectElement.closest('.modal');
+      const inputWaktu = modal.querySelector('#edit_waktu');
+      inputWaktu.value = waktu || '';
+
+      hitungDurasiPengerjaanEdit(modal); // panggil juga hitung durasi kalau ada perubahan waktu
+    }
+
+    // Hitung durasi pengerjaan otomatis saat ada perubahan (versi edit)
+    function hitungDurasiPengerjaanEdit(modal) {
+      const tglMulai = modal.querySelector('[name="tanggalPengerjaan"]').value;
+      const jamMulai = modal.querySelector('[name="jamPengerjaan"]').value;
+      const tglSelesai = modal.querySelector('[name="tanggalSelesai"]').value;
+      const jamSelesai = modal.querySelector('[name="jamSelesai"]').value;
+      const istirahat = parseInt(modal.querySelector('[name="istirahat"]').value || 0);
+      const inputDurasi = modal.querySelector('[name="durasiPengerjaan"]');
+      const statusInput = modal.querySelector('[name="status"]');
+      const standar = parseInt(modal.querySelector('[name="waktu"]').value || 0);
+
+      if (tglMulai && jamMulai && tglSelesai && jamSelesai) {
+        const mulai = new Date(`${tglMulai}T${jamMulai}`);
+        const selesai = new Date(`${tglSelesai}T${jamSelesai}`);
+
+        const durasiMs = selesai - mulai;
+        const durasiMenit = Math.floor(durasiMs / 60000) - istirahat;
+        const finalDurasi = durasiMenit >= 0 ? durasiMenit : 0;
+
+        inputDurasi.value = finalDurasi;
+
+        if (!isNaN(standar)) {
+          statusInput.value = finalDurasi <= standar ? "Tepat Waktu" : "Terlambat";
+        }
+      }
+    }
+
+    // Pas modal ditampilkan, bind semua event input
+    document.addEventListener('DOMContentLoaded', function () {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        const inputs = modal.querySelectorAll('[name="tanggalPengerjaan"], [name="jamPengerjaan"], [name="tanggalSelesai"], [name="jamSelesai"], [name="istirahat"], [name="waktu"]');
+
+        inputs.forEach(input => {
+          input.addEventListener("input", () => hitungDurasiPengerjaanEdit(modal));
+        });
+      });
+    });
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <footer class="bg-dark text-white text-center py-3 mt-auto">
       <div class="container">
