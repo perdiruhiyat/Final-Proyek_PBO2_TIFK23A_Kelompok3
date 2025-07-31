@@ -1,9 +1,9 @@
-# 📚 UAS Pemrograman Berorientasi Obyek 2
+# UAS Pemrograman Berorientasi Obyek 2
 
 - **Mata Kuliah:** Pemrograman Berorientasi Obyek 2  
 - **Dosen Pengampu:** [Muhammad Ikhwan Fathulloh](https://github.com/Muhammad-Ikhwan-Fathulloh)
 
-## 👤 Profil
+## Profil
 - **Kelompok 3**
 - **Ketua**
   
@@ -16,84 +16,52 @@
   
 - **Studi Kasus:** Aplikasi TRSystem (Technical Report System)
 
-## 📋 Judul Studi Kasus
+## Judul Studi Kasus
 
-**TRSystem**
+**TRSystem - Technical Report System**
 
-## 🧾 Penjelasan Studi Kasus
+## Penjelasan Studi Kasus
 
-Aplikasi TRSystem (singkatan dari Technical Report System) adalah sistem berbasis web yang digunakan untuk mencatat, mengelola, dan merekap aktivitas perawatan hardware oleh teknisi dalam sebuah organisasi. Sistem ini dirancang dengan pendekatan berbasis OOP (Object-Oriented Programming) dan dibangun menggunakan teknologi Spring Boot, Thymeleaf, dan MySQL. Aplikasi TRSystem dirancang dengan sistem login berbasis role, sehingga setiap jenis user memiliki hak akses dan fitur yang berbeda. Role yang digunakan adalah:
+TRSystem (Technical Report System) adalah aplikasi berbasis web yang dirancang untuk membantu proses pencatatan, pengelolaan, dan pelaporan kegiatan perawatan perangkat - perangkat yang ada oleh teknisi dalam sebuah organisasi atau perusahaan.
 
+Aplikasi ini dibangun menggunakan pendekatan **Object-Oriented Programming (OOP)** dengan stack teknologi:
+- Spring Boot  
+- Thymeleaf  
+- MySQL 
 
-🎯 Role-Based Usage Aplikasi TRSystem
+Aplikasi ini juga menerapkan **role-based login** agar setiap jenis pengguna memiliki hak akses yang sesuai.
 
-**Role :**
+### Role Akses
 
-- Admin
+#### 1. Admin
+Admin memiliki hak akses penuh terhadap sistem.
 
-- Teknisi
-  
+**Fitur Admin:**
+- Login dengan autentikasi terenkripsi (BCrypt)
+- Manajemen User Teknisi:
+  - Tambah/Edit/Hapus user
+- Manajemen Data Hardware:
+  - Tambah/Edit/Hapus hardware
+- Manajemen Standar Waktu:
+  - Tambah/Edit/Hapus standar waktu / parameter waktu pengerjaan
+- Monitoring Rekap:
+  - Melihat semua rekap teknisi
+  - Melihat durasi dan status kegiatan
+  - Review/Validasi data teknisi
+  - Export Rekap Perawatan
 
-👑 Admin Role
-    Admin memiliki akses penuh untuk mengelola data dan pengguna dalam sistem. Fitur-fitur yang dapat digunakan oleh Admin antara lain:
+#### 2. Teknisi
+Teknisi hanya memiliki akses untuk input dan melihat data miliknya sendiri.
 
-✅ Login Sebagai Admin
-🔐 Autentikasi menggunakan username dan password terenkripsi dengan BCrypt.
+**Fitur Teknisi:**
+- Login sebagai teknisi
+- Lihat Data Hardware
+- Input Rekap Perawatan:
+  - Tambah/Edit/Hapus Rekap Perawatan
+- Lihat Riwayat Rekap Pribadi
+## Penjelasan 4 Pilar OOP dalam Studi Kasus
 
-👥 Manajemen User
-
-  - Menambahkan user teknisi baru
-
-  - Mengedit data user teknisi (nama, username, role)
-
-  - Menghapus user teknisi
-
-🛠️ Manajemen Data Hardware
-
-  - Menambah, mengedit, dan menghapus data perangkat (hardware)
-
-📊 Manajemen Standar Waktu Perawatan
-
-  - Menambah, mengedit, dan menghapus standar waktu berdasarkan deskripsi aktivitas
-
-📋 Monitoring Rekap Perawatan
-
-  - Melihat semua rekap perawatan dari semua teknisi
-
-  - Melihat status dan durasi perawatan teknisi
-
-  - Melakukan validasi atau review data teknisi
-
-🧑‍🔧 Teknisi Role
-    Teknisi adalah user yang bertugas melakukan perawatan dan mengisi laporan melalui sistem. Fitur yang tersedia untuk teknisi antara lain:
-
-✅ Login Sebagai Teknisi
-🔐 Autentikasi untuk masuk dan mengakses halaman teknisi
-
-📝 Input Rekap Perawatan
-
-  - Mengisi tanggal dan waktu perawatan
-
-  - Memilih hardware yang dirawat
-
-  - Memasukkan deskripsi dan keterangan perawatan
-  
-  - Menentukan durasi dan status kegiatan
-
-📜 Melihat Riwayat Rekap Pribadi
-
-  - Menampilkan semua kegiatan perawatan yang pernah dilakukan
-
-  - Melihat durasi dan hasil perawatan yang sudah diinput
-
-⏱️ Standar Waktu Referensi
-
-  - Dapat melihat standar waktu untuk tiap jenis kegiatan (untuk membandingkan durasi aktual)
-
-
-## 💡 Penjelasan 4 Pilar OOP dalam Studi Kasus
-
-### 1. 🧬 Inheritance
+### 1. Inheritance
 
 Inheritance adalah pewarisan properti dan method dari class lain. Dalam studi kasus ini, `UserService` mewarisi interface `UserDetailsService` milik Spring Security untuk keperluan autentikasi pengguna.
 
@@ -108,7 +76,7 @@ public class UserService implements UserDetailsService {
 
 ---
 
-### 2. 🔒 Encapsulation
+### 2. Encapsulation
 
 Encapsulation adalah membungkus data dan method dalam satu unit, serta menyembunyikan akses langsung ke data.Setiap class model seperti `User`, `Hardware`, dan `RekapPerawatan` menggunakan modifier `private` untuk field-nya dan menyediakan getter/setter sebagai akses.
 ```java
@@ -128,7 +96,7 @@ public class User {
 
 ---
 
-### 3. 🔁 Polymorphism
+### 3. Polymorphism
 
 Polymorphism memungkinkan objek memiliki banyak bentuk. Contohnya, `UserService` mengimplementasikan interface `UserDetailsService`. Dengan ini, objek `UserService` bisa diperlakukan sebagai `UserDetailsService`.
 
@@ -145,7 +113,7 @@ public UserDetails loadUserByUsername(String username) throws UsernameNotFoundEx
 
 ---
 
-### 4. 🧩 Abstraction
+### 4. Abstraction
 
 Abstraction menyembunyikan detail implementasi. Contoh nyatanya adalah `UserRepository`, `RekapPerawatanRepository`, dan `StandarWaktuRepository` yang mewarisi dari `JpaRepository`. Kita bisa langsung menggunakan method seperti `findByUsername()` atau `findByTeknisi()` tanpa tahu bagaimana query SQL-nya dibuat.
 
@@ -183,6 +151,6 @@ public class HardwareService {
 ## 🎥 Demo Proyek
 
 <ul>
-  <li><strong>GitHub:</strong> <a href="https:github.com/perdiruhiyat/Final-Proyek_PBO2_TIFK23A_Kelompok3">https://github.com/perdiruhiyat/Final-Proyek_PBO2_TIFK23A_Kelompok3</a></li>
-  <li><strong>YouTube:</strong> 
+  <li><strong>GitHub:</strong> <a href="https://github.com/perdiruhiyat/UAS_PBO2_TIFK23A_Kelompok3.git">Github</a></li>
+  <li><strong>Google Drive:</strong> <a href="https://drive.google.com/drive/folders/1xX5S-G0BUNAkuJnKovUl855w5K4thdGj?usp=sharing">Google Drive</a></li>
 </ul>
